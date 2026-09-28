@@ -1,0 +1,125 @@
+plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+    id 'net.neoforged.moddev' version '2.0.78'
+}
+
+// Each mod remains buildable on its own or as part of the collection.
+def modProperties = new Properties()
+file('gradle.properties').withInputStream { modProperties.load(it) }
+modProperties.each { key, value ->
+    if (!key.startsWith('org.gradle.')) { extensions.extraProperties.set(key, value) }
+}
+
+version = project.mod_version
+group = project.mod_group_id
+
+base {
+    archivesName = project.mod_id
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    runs {
+        client { client() }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+    }
+
+    mods {
+        "${project.mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+
+    unitTest {
+        enable()
+        testedMod = mods.village_garrison
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+    maven {
+        name = 'Create'
+        url = 'https://maven.createmod.net'
+        content { includeGroup 'net.createmod.ponder'; includeGroup 'dev.engine-room.flywheel' }
+    }
+    maven {
+        name = 'Registrate'
+        url = 'https://maven.ithundxr.dev/snapshots'
+        content { includeGroup 'com.tterrag.registrate' }
+    }
+}
+
+dependencies {
+    // spell_engine-neoforge-1.9.9+1.21.1.jar
+    compileOnly('maven.modrinth:XvoWJaA2:KW2O6JbI') { transitive = false }
+    // spell_power-neoforge-1.4.6+1.21.1.jar
+    compileOnly('maven.modrinth:8ooWzSQP:yAV6LKTH') { transitive = false }
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation "net.neoforged:testframework:${project.neo_version}"
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(ProcessResources).configureEach {
+    def replaceProperties = [
+            minecraft_version_range: minecraft_version_range,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+    inputs.properties replaceProperties
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand replaceProperties
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+// Keep the dedicated development server console usable for local smoke tests.
+tasks.withType(JavaExec).configureEach {
+    standardInput = System.in
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    testLogging { events 'failed', 'skipped' }
+}
+
+tasks.withType(Jar).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    from(rootProject.file('LICENSE'))
+}
+
+apply from: 'gradle/runtime-dependencies.gradle'
+
+configurations.testCompileOnly.extendsFrom(configurations.compileOnly)

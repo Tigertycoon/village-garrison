@@ -1,0 +1,41 @@
+// Pinned development runtime; dependencies are downloaded, never bundled in this mod.
+dependencies {
+    // Spell Engine 1.9.9
+    runtimeOnly('maven.modrinth:XvoWJaA2:KW2O6JbI') { transitive = false }
+    // Spell Power 1.4.6
+    runtimeOnly('maven.modrinth:8ooWzSQP:yAV6LKTH') { transitive = false }
+    // Forgified Fabric API 0.115.6+2.1.4
+    runtimeOnly('maven.modrinth:Aqlf1Shp:9uOfdsZC') { transitive = false }
+    // cloth-config-neoforge-15.0.130-neoforge.jar
+    runtimeOnly('maven.modrinth:9s6osm5g:DqgODWcH') { transitive = false }
+    // gedNE4y2-HJZB6bmA.jar
+    runtimeOnly('maven.modrinth:gedNE4y2:HJZB6bmA') { transitive = false }
+    // accessories-neoforge-1.1.0-beta.48+1.21.1.jar
+    runtimeOnly('maven.modrinth:jtmvUHXj:Avp7HDTx') { transitive = false }
+    // owo-lib-0.12.15.5-beta.1+1.21.jar
+    runtimeOnly('maven.modrinth:ccKDOlHs:NMCHU6DZ') { transitive = false }
+    // runes-1.2.0+1.21.1-neoforge.jar
+    runtimeOnly('maven.modrinth:lP9Yrr1E:aTTHCEaa') { transitive = false }
+    // Iron's Spells 1.21.1-3.16.2
+    runtimeOnly('maven.modrinth:s4OWxYQQ:RtvqnbKi') { transitive = false }
+    // Iron's Lib 1.21.1-2.1.0
+    runtimeOnly('maven.modrinth:9nfaJPtX:sQyzhxuH') { transitive = false }
+    // geckolib-neoforge-1.21.1-4.7.7.jar
+    runtimeOnly('maven.modrinth:8BmcQJ2H:18qeSgOb') { transitive = false }
+    // curios-neoforge-9.5.1+1.21.1.jar
+    runtimeOnly('maven.modrinth:vvuO3ImH:yohfFbgD') { transitive = false }
+    // Guard Villagers 2.4.11
+    runtimeOnly('maven.modrinth:H1sntfo8:b8N5GP8u') { transitive = false }
+    // Wizards 2.7.1
+    runtimeOnly('maven.modrinth:NkGaQMDA:5QJEqWD3') { transitive = false }
+    // 5sy6g3kz-2NyTus6V.jar
+    runtimeOnly('maven.modrinth:5sy6g3kz:2NyTus6V') { transitive = false }
+    // better_weaponry-1.1.3-neoforge-1.21.1.jar
+    runtimeOnly('maven.modrinth:2cJG8mMz:PDtnaJbV') { transitive = false }
+    // Better Mob Combat Reimagined 1.0.41
+    runtimeOnly('maven.modrinth:ZMyutZkx:r8EkJSL4') { transitive = false }
+    // azurelibarmor-neo-1.21.1-3.1.1.jar
+    runtimeOnly('maven.modrinth:pduQXSbl:HyR8c65k') { transitive = false }
+    // structure-pool-api-1.2.0+1.21.1-neoforge.jar
+    runtimeOnly('maven.modrinth:LrYZi08Q:iROwWAHc') { transitive = false }
+}
